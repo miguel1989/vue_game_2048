@@ -47,7 +47,7 @@ export default class Board {
   }
 
   _moveHorizontally(toLeft = true) {
-    console.time('_moveHorizontally')
+    // console.time('_moveHorizontally')
     for (let row = 0; row < BOARD_SIZE; row++) {
       let start = row * BOARD_SIZE
       let moveFunc = this.moveRowToRight
@@ -57,7 +57,7 @@ export default class Board {
       let rowArr = moveFunc.call(this, this.cells.slice(start, start + BOARD_SIZE))
       this.cells.splice(start, BOARD_SIZE, ...rowArr)
     }
-    console.timeEnd('_moveHorizontally')
+    // console.timeEnd('_moveHorizontally')
   }
 
   moveAllUp() {
@@ -69,7 +69,7 @@ export default class Board {
   }
 
   _moveVertically(isUp = true) {
-    console.time('_moveVertically')
+    // console.time('_moveVertically')
     for (let cell = 0; cell < BOARD_SIZE; cell++) {
       let tmpArr = []
       for (let row = 0; row < BOARD_SIZE; row++) {
@@ -84,7 +84,7 @@ export default class Board {
         this.cells.splice((row * BOARD_SIZE) + cell, 1, tmpArr[row])
       }
     }
-    console.timeEnd('_moveVertically')
+    // console.timeEnd('_moveVertically')
   }
 
   moveRowToRight(row) {
