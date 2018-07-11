@@ -15,15 +15,4 @@
   }
 </script>
 <style>
-  .final-screen {
-    width: 360px;
-    height: 360px;
-    position: absolute;
-    background-color: white;
-    opacity: 0.5;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 </style>
