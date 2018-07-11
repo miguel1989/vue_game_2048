@@ -86,4 +86,20 @@ describe('Board main logic', () => {
     board.cells = row1.concat(row2, row3, row4)
     expect(board.findEmptyCellIndex()).to.be.oneOf([3, 5, 10, 14])
   })
+  it('should finish game when there is no place to move', () => {
+    let row1 = [2, 4, 8, 16]
+    let row2 = [16, 8, 4, 2]
+    let row3 = [2, 4, 8, 16]
+    let row4 = [16, 8, 4, 2]
+    board.cells = row1.concat(row2, row3, row4)
+    expect(board.isFinished()).to.be.true
+  })
+  it('should not finish game when there is place to move', () => {
+    let row1 = [8, 2, 4, 2]
+    let row2 = [4, 2, 2, 0]
+    let row3 = [16, 16, 16, 16]
+    let row4 = [4, 0, 4, 0]
+    board.cells = row1.concat(row2, row3, row4)
+    expect(board.isFinished()).to.be.false
+  })
 })
