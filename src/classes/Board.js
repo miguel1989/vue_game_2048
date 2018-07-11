@@ -1,9 +1,11 @@
 import {BOARD_SIZE, CELL_COUNT} from '../const'
-const WINNER_VALUE = 16
+
+const WINNER_VALUE = 2048
 export default class Board {
   constructor() {
     this.cells = []
     this.hasWon = false
+    this.hasLost = false
     this.isChangedAfterMove = false
 
     this.initCells()
@@ -11,7 +13,7 @@ export default class Board {
 
   // 38 - up. 39 - right. 40 down. 37 - left
   move(keyCode) {
-    if (this.hasWon) {
+    if (this.hasWon || this.hasLost) {
       return
     }
     this.isChangedAfterMove = false
@@ -33,6 +35,7 @@ export default class Board {
     if (this.isChangedAfterMove) {
       this.placeRandomNumber()
     }
+    this.hasLost = this.isFinished()
   }
 
   moveAllRight() {
@@ -110,7 +113,29 @@ export default class Board {
   }
 
   isFinished() {
+    let result = true
     // for each cell check if it can be moved in 4 directions, check presence for '0' or the same value
+    for (let j = 0; j < BOARD_SIZE; j++) {
+      for (let i = 0; i < BOARD_SIZE; i++) {
+        let idx = j * BOARD_SIZE + i
+        let left = {x: i - 1, y: j}
+        let right = {x: i + 1, y: j}
+        let top = {x: i, y: j - 1}
+        let bottom = {x: i, y: j + 1}
+        let self = this;
+        [left, right, top, bottom].forEach(tmpCell => {
+          if (tmpCell.x < 0 || tmpCell.x >= BOARD_SIZE ||
+            tmpCell.y < 0 || tmpCell.y >= BOARD_SIZE) {
+            return
+          }
+          let tmpIdx = tmpCell.y * BOARD_SIZE + tmpCell.x
+          if (self.cells[tmpIdx] === 0 || self.cells[tmpIdx] === self.cells[idx]) {
+            result = false
+          }
+        })
+      }
+    }
+    return result
   }
 
   // search for cell where the value still is 0 and store their indexes

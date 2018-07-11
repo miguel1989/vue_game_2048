@@ -1,11 +1,19 @@
 <template>
   <div class="game-wrap">
-    <div class="game-board">
+    <div v-if="isGameRunning" class="game-board">
       <div class="row" v-for="row in BOARD_SIZE" :key="row">
         <div class="cell" v-for="cell in BOARD_SIZE" :key="cell">
           {{ getCellValue(row, cell) }}
         </div>
       </div>
+    </div>
+    <div v-if="hasWon">
+      <div>You have won!</div>
+      <div @click="resetGame">[reset]</div>
+    </div>
+    <div v-if="hasLost">
+      <div>You have lost :(</div>
+      <div @click="resetGame">[reset]</div>
     </div>
   </div>
 
@@ -16,6 +24,17 @@
 
   export default {
     name: 'game',
+    computed: {
+      hasWon() {
+        return this.board.hasWon
+      },
+      hasLost() {
+        return this.board.hasLost
+      },
+      isGameRunning() {
+        return !this.hasWon && !this.hasLost
+      }
+    },
     data() {
       return {
         board: new Board(),
@@ -35,9 +54,13 @@
         cell = cell - 1
         let val = this.board.cells[(row * BOARD_SIZE) + cell]
         return val === 0 ? '' : val
+      },
+      resetGame() {
+        this.board = new Board()
       }
     },
-    created() {},
+    created() {
+    },
     mounted() {
       window.addEventListener('keyup', this.onKeyUp.bind(this))
     },
