@@ -65,4 +65,22 @@
   .val_2048 {
     background-color: #E64A19;
   }
+
+  @keyframes new-tile {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .cell.new {
+    animation-duration: 0.4s;
+    animation-name: new-tile;
+    animation-fill-mode: forwards;
+    /*animation-delay: 0.15s;*/
+    transform: scale(0);
+  }
 </style>
